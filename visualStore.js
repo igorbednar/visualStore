@@ -13,7 +13,10 @@
         root.vs = factory(root.ol);
     }
 }(this, function (ol) {
-    var visualStore = {};
+    var vs = {};
 
-    return visualStore.vs;
+    vs.setBackground = function(url){
+
+    }
+    return vs;
 }));
