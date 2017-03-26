@@ -44,6 +44,40 @@
             })
         });
 
+        return {
+            drawRectangle: function (topLeft, bottomRight, sColor, fColor) {
+
+
+
+                var style = new ol.style.Style({
+                    fill: new ol.style.Fill({ color: fColor })
+                });
+
+
+                var pnt = [];
+                pnt.push([topLeft[0], bottomRight[1]],topLeft, [bottomRight[0], topLeft[1]], bottomRight, [topLeft[0], bottomRight[1]]);
+
+                var ln = new ol.geom.Polygon([pnt]);
+
+                var linearRingFeature = new ol.Feature
+                    ({
+                        geometry: ln
+                    })
+
+                linearRingFeature.setStyle(style);
+
+                var source = new ol.source.Vector({
+                    features: [linearRingFeature]
+                });
+
+                var vectorLayer = new ol.layer.Vector({
+                    source: source
+                });
+
+                map.addLayer(vectorLayer);
+
+            }
+        }
     }
     return visualStore;
 }));
