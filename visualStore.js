@@ -10,13 +10,40 @@
         module.exports = factory(require('ol'));
     } else {
         // Browser globals (root is window)
-        root.vs = factory(root.ol);
+        root.visualStore = factory(root.ol);
     }
 }(this, function (ol) {
-    var vs = {};
+    var visualStore = {};
 
-    vs.setBackground = function(url){
+    visualStore.initMap = function(url){
+
+      var extent = [0, 0, 1024, 968];
+      var projection = new ol.proj.Projection({
+        code: 'xkcd-image',
+        units: 'pixels',
+        extent: extent
+      });
+
+      var map = new ol.Map({
+        layers: [
+          new ol.layer.Image({
+            source: new ol.source.ImageStatic({
+              attributions: '© <a href="http://xkcd.com/license.html">xkcd</a>',
+              url: url,
+              projection: projection,
+              imageExtent: extent
+            })
+          })
+        ],
+        target: 'map',
+        view: new ol.View({
+          projection: projection,
+          center: ol.extent.getCenter(extent),
+          zoom: 2,
+          maxZoom: 8
+        })
+      });
 
     }
-    return vs;
+    return visualStore;
 }));
